@@ -34,30 +34,12 @@ export const loanDataSlice = createSlice({
     setError: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
     },
-    filterBy: (state, action: PayloadAction<FilterType>) => {
-      const newFilterKey = Object.keys(action.payload)[0];
-
-      const existingFilterIndex = state.filters.findIndex((filter) =>
-        filter.hasOwnProperty(newFilterKey)
-      );
-
-      // If the filter already exists, update it. Otherwise, add it to the filter array
-      if (existingFilterIndex !== -1) {
-        state.filters = state.filters.map((filter) =>
-          filter.hasOwnProperty(newFilterKey) ? action.payload : filter
-        );
-      } else {
-        state.filters = [...state.filters, action.payload];
-      }
-
-      // Filter the data based on the current filters
-      let updatedData = [];
-
-      state.filters.forEach((filter) => {});
+    setFilters: (state, action: PayloadAction<FilterType[]>) => {
+      state.filters = action.payload;
     },
   },
 });
 
-export const { setLoanData, setLoading, setError, filterBy } =
+export const { setLoanData, setLoading, setError, setFilters } =
   loanDataSlice.actions;
 export default loanDataSlice.reducer;

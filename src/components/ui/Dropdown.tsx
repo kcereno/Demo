@@ -1,18 +1,25 @@
 import React from 'react';
-import { DropdownOptionType, DropdownOptionsType } from '../../types';
+import {
+  DropdownOptionType,
+  DropdownOptionsType,
+  FilterType,
+} from '../../types';
 
 type DropDownPropsType = {
   label: string;
+  id: string;
   options: DropdownOptionsType;
-  onChange: (value: DropdownOptionType) => void;
+  onChange: (selectedOption: FilterType) => void;
 };
 
-function Dropdown({ label, options }: DropDownPropsType) {
+function Dropdown({ label, id, options, onChange }: DropDownPropsType) {
   const [selected, setSelected] = React.useState<null | any>(null);
 
   const handleSelect = (value: DropdownOptionType) => {
     setSelected(value);
-    // onChange(value);
+    onChange({
+      [id]: value,
+    });
   };
   return (
     <>

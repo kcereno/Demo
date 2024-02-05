@@ -11,19 +11,21 @@ import {
 import { extractUniqueValues } from '../utils';
 
 type GradeTableFilterProps = {
-  filterBy: (filter: FilterType) => void;
-  filteredData: LoanDataType[];
+  updateFilters: (updatedFilter: FilterType[]) => void;
+  filters: FilterType[];
   loanData: LoanDataType[];
 };
 
 function GradeTableFilter({
-  filterBy,
+  updateFilters,
   loanData,
-  filteredData,
+  filters,
 }: GradeTableFilterProps) {
+  console.log('filters:', filters);
   const dropdownData: DropdownDataType[] = [
     {
       label: 'Home Ownership',
+      id: 'homeOwnership',
       options: extractUniqueValues(
         loanData,
         'homeOwnership'
@@ -31,17 +33,37 @@ function GradeTableFilter({
     },
     {
       label: 'Quarter',
+      id: 'quarter',
       options: extractUniqueValues(loanData, 'quarter') as QuarterEnum[],
     },
     {
       label: 'Term',
+      id: 'term',
       options: extractUniqueValues(loanData, 'term') as TermType[],
     },
     {
       label: 'Year',
+      id: 'year',
       options: extractUniqueValues(loanData, 'year') as number[],
     },
   ];
+
+  const handleDropdownChange = (selectedOption: FilterType) => {
+    const newFilterKey = Object.keys(selectedOption)[0];
+
+    const existingFilterIndex = filters.findIndex((filter) =>
+      filter.hasOwnProperty(newFilterKey)
+    );
+
+    const updatedFilters =
+      existingFilterIndex !== -1
+        ? filters.map((filter, index) =>
+            index === existingFilterIndex ? selectedOption : filter
+          )
+        : [...filters, selectedOption];
+
+    updateFilters(updatedFilters);
+  };
 
   return (
     <div className="flex gap-2 justify-center">
@@ -49,8 +71,11 @@ function GradeTableFilter({
         <Dropdown
           key={index}
           label={data.label}
+          id={data.id}
           options={data.options}
-          onChange={(first) => {}}
+          onChange={(selectedOption) => {
+            handleDropdownChange(selectedOption);
+          }}
         />
       ))}
       <button

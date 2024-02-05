@@ -1,4 +1,3 @@
-import Dropdown from './components/ui/Dropdown';
 export enum HomeOwnershipEnum {
   RENT = 'RENT',
   MORTGAGE = 'MORTGAGE',
@@ -60,5 +59,6 @@ export type LoanDataType = {
 
 export type DropdownDataType = {
   label: string;
+  id: string;
   options: DropdownOptionsType;
 };
