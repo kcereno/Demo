@@ -47,6 +47,11 @@ function App() {
         dv01 Loan Analysis
       </h1>
 
+      {error && (
+        <p className="py-10 text-2xl tracking-tight font-bold text-center">
+          There has been an error
+        </p>
+      )}
       {loading ? (
         <p className="py-10 text-2xl tracking-tight font-bold text-center">
           Loading Data
