@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { FilterType, HomeOwnershipEnum, LoanDataType } from '../../types';
-import { find } from '@reduxjs/toolkit/dist/utils';
+import { FilterType, LoanDataType } from '../../types';
 
 interface LoanDataState {
   data: LoanDataType[];
@@ -36,6 +35,15 @@ export const loanDataSlice = createSlice({
     },
     setFilters: (state, action: PayloadAction<FilterType[]>) => {
       state.filters = action.payload;
+
+      const filteredData = state.data.filter((item) =>
+        state.filters.every((filterItem) => {
+          const [filterKey, filterValue] = Object.entries(filterItem)[0];
+          return item[filterKey as keyof LoanDataType] === filterValue;
+        })
+      );
+
+      state.filteredData = filteredData;
     },
   },
 });

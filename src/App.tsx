@@ -17,6 +17,7 @@ function App() {
   const { data, filteredData, loading, error, filters } = useAppSelector(
     (state) => state.loanData
   );
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +38,7 @@ function App() {
     fetchData();
   }, [dispatch]);
 
-  console.log('App ~ filters:', filters);
+  console.log('App ~ filteredData:', filteredData);
 
   return (
     <main className="flex flex-col items-center pt-20 bg-gray-900 min-h-screen text-white">
@@ -54,13 +55,6 @@ function App() {
           loanData={data}
         />
       </div>
-      {/* <button
-        onClick={() => {
-          dispatch(setFilters({ homeOwnership: HomeOwnershipEnum.OWN }));
-        }}
-      >
-        tet
-      </button> */}
     </main>
   );
 }
