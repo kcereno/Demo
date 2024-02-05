@@ -27,6 +27,7 @@ function App() {
         const data: LoanDataType[] = (await getData()).filter(
           (entry) => entry.grade !== undefined
         );
+
         dispatch(setLoanData(data));
       } catch (error) {
         dispatch(setError(error));
@@ -45,16 +46,23 @@ function App() {
       <h1 className="text-3xl font-bold tracking-tight mb-10">
         dv01 Loan Analysis
       </h1>
-      <div className="space-y-6">
-        <GradeTable loanData={filteredData} />
-        <GradeTableFilter
-          filters={filters}
-          updateFilters={(updatedFilters) => {
-            dispatch(setFilters(updatedFilters));
-          }}
-          loanData={data}
-        />
-      </div>
+
+      {loading ? (
+        <p className="py-10 text-2xl tracking-tight font-bold text-center">
+          Loading Data
+        </p>
+      ) : (
+        <div className="space-y-6">
+          <GradeTable loanData={filteredData} />
+          <GradeTableFilter
+            filters={filters}
+            updateFilters={(updatedFilters) => {
+              dispatch(setFilters(updatedFilters));
+            }}
+            loanData={data}
+          />
+        </div>
+      )}
     </main>
   );
 }
