@@ -7,7 +7,7 @@ type TablePropsType = {
 
 function Table({ tableData }: TablePropsType) {
   return (
-    <div className="relative overflow-x-auto rounded-md ">
+    <div className="relative overflow-x-auto rounded-md border border-slate-600 ">
       <table className="w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 text-center">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -40,6 +40,11 @@ function Table({ tableData }: TablePropsType) {
           ))}
         </tbody>
       </table>
+      {tableData.rows.length === 0 && (
+        <div className="text-center py-10 text-bold text-2xl">
+          No Table Data Found
+        </div>
+      )}
     </div>
   );
 }
