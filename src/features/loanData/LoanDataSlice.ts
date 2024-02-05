@@ -1,11 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { FilterType, LoanDataType } from '../../types';
+import { FilterType, HomeOwnershipEnum, LoanDataType } from '../../types';
 import { find } from '@reduxjs/toolkit/dist/utils';
 
 interface LoanDataState {
   data: LoanDataType[];
-  filter: any[];
+  filters: FilterType[];
+  filteredData: LoanDataType[];
   loading: boolean;
   error: string | null;
 }
@@ -13,7 +14,8 @@ interface LoanDataState {
 // Define the initial state using that type
 const initialState: LoanDataState = {
   data: [],
-  filter: [],
+  filters: [],
+  filteredData: [],
   loading: false,
   error: null,
 };
@@ -24,6 +26,7 @@ export const loanDataSlice = createSlice({
   reducers: {
     setLoanData: (state, action: PayloadAction<any>) => {
       state.data = action.payload;
+      state.filteredData = action.payload;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -34,17 +37,23 @@ export const loanDataSlice = createSlice({
     filterBy: (state, action: PayloadAction<FilterType>) => {
       const newFilterKey = Object.keys(action.payload)[0];
 
-      const existingFilterIndex = state.filter.findIndex((filter) =>
+      const existingFilterIndex = state.filters.findIndex((filter) =>
         filter.hasOwnProperty(newFilterKey)
       );
 
+      // If the filter already exists, update it. Otherwise, add it to the filter array
       if (existingFilterIndex !== -1) {
-        state.filter = state.filter.map((filter) =>
+        state.filters = state.filters.map((filter) =>
           filter.hasOwnProperty(newFilterKey) ? action.payload : filter
         );
       } else {
-        state.filter = [...state.filter, action.payload];
+        state.filters = [...state.filters, action.payload];
       }
+
+      // Filter the data based on the current filters
+      let updatedData = [];
+
+      state.filters.forEach((filter) => {});
     },
   },
 });

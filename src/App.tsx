@@ -14,12 +14,11 @@ import {
 import GradeTable from './components/GradeTable';
 
 function App() {
-  const { data, loading, error, filter } = useAppSelector(
+  const { data, filteredData, loading, error, filters } = useAppSelector(
     (state) => state.loanData
   );
 
   const dispatch = useAppDispatch();
-  console.log('App ~ filter:', filter);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,12 +45,13 @@ function App() {
         dv01 Loan Analysis
       </h1>
       <div className="space-y-6">
-        <GradeTable loanData={data} />
+        <GradeTable loanData={filteredData} />
         <GradeTableFilter
           filterBy={(filter) => {
             dispatch(filterBy(filter));
           }}
           loanData={data}
+          filteredData={filteredData}
         />
       </div>
     </main>

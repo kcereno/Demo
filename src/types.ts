@@ -1,3 +1,4 @@
+import Dropdown from './components/ui/Dropdown';
 export enum HomeOwnershipEnum {
   RENT = 'RENT',
   MORTGAGE = 'MORTGAGE',
@@ -11,9 +12,20 @@ export enum QuarterEnum {
   FOUR = '4',
 }
 
-export type TermType = {
-  term: '36 months' | '60 months';
-};
+export type DropdownOptionsType = (
+  | HomeOwnershipEnum
+  | QuarterEnum
+  | TermType
+  | number
+)[];
+
+export type DropdownOptionType =
+  | HomeOwnershipEnum
+  | QuarterEnum
+  | TermType
+  | number;
+
+export type TermType = '36 months' | '60 months';
 
 export interface TableColumnType {
   name: string;
@@ -44,4 +56,9 @@ export type LoanDataType = {
   homeOwnership: HomeOwnershipEnum;
   term: TermType;
   currentBalance: string;
+};
+
+export type DropdownDataType = {
+  label: string;
+  options: DropdownOptionsType;
 };

@@ -1,27 +1,28 @@
 import React from 'react';
+import { DropdownOptionType, DropdownOptionsType } from '../../types';
 
 type DropDownPropsType = {
-  header: string;
-  options: any[];
-  onChange: (value: any) => void;
+  label: string;
+  options: DropdownOptionsType;
+  onChange: (value: DropdownOptionType) => void;
 };
 
-function Dropdown({ header, options, onChange }: DropDownPropsType) {
-  const [selected, setSelected] = React.useState(options[0]);
+function Dropdown({ label, options }: DropDownPropsType) {
+  const [selected, setSelected] = React.useState<null | any>(null);
 
-  const handleSelect = (value: string) => {
+  const handleSelect = (value: DropdownOptionType) => {
     setSelected(value);
-    onChange(value);
+    // onChange(value);
   };
   return (
     <>
       <button
         id="dropdownDefaultButton"
-        data-dropdown-toggle={header}
+        data-dropdown-toggle={label}
         className="  text-white w-44 h-12 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 justify-between text-center inline-flex items-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
       >
-        {selected ? selected : header}
+        {selected ? selected : label}
         <svg
           className="w-2.5 h-2.5 ms-3"
           aria-hidden="true"
@@ -41,7 +42,7 @@ function Dropdown({ header, options, onChange }: DropDownPropsType) {
 
       {/* Drowpdown Menu */}
       <div
-        id={header}
+        id={label}
         className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
       >
         <ul

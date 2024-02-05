@@ -1,35 +1,46 @@
 import React from 'react';
 import Dropdown from './ui/Dropdown';
 import {
+  DropdownDataType,
   FilterType,
   HomeOwnershipEnum,
   LoanDataType,
   QuarterEnum,
+  TermType,
 } from '../types';
 import { extractUniqueValues } from '../utils';
 
 type GradeTableFilterProps = {
   filterBy: (filter: FilterType) => void;
+  filteredData: LoanDataType[];
   loanData: LoanDataType[];
 };
 
-function GradeTableFilter({ filterBy, loanData }: GradeTableFilterProps) {
-  const dropdownData = [
+function GradeTableFilter({
+  filterBy,
+  loanData,
+  filteredData,
+}: GradeTableFilterProps) {
+  const dropdownData: DropdownDataType[] = [
     {
-      header: 'Home Ownership',
-      options: extractUniqueValues(loanData, 'homeOwnership'),
-      onChange: (value: HomeOwnershipEnum) =>
-        filterBy({ homeOwnership: value }),
+      label: 'Home Ownership',
+      options: extractUniqueValues(
+        loanData,
+        'homeOwnership'
+      ) as HomeOwnershipEnum[],
     },
     {
-      header: 'Quarter',
-      options: extractUniqueValues(loanData, 'quarter'),
-      onChange: (value: QuarterEnum) => filterBy({ quarter: value }),
+      label: 'Quarter',
+      options: extractUniqueValues(loanData, 'quarter') as QuarterEnum[],
     },
-    // {
-    //   header: 'Year',
-    //   options: extractUniqueValues(loanData, 'year'),
-    // },
+    {
+      label: 'Term',
+      options: extractUniqueValues(loanData, 'term') as TermType[],
+    },
+    {
+      label: 'Year',
+      options: extractUniqueValues(loanData, 'year') as number[],
+    },
   ];
 
   return (
@@ -37,9 +48,9 @@ function GradeTableFilter({ filterBy, loanData }: GradeTableFilterProps) {
       {dropdownData.map((data, index) => (
         <Dropdown
           key={index}
-          header={data.header}
+          label={data.label}
           options={data.options}
-          onChange={data.onChange}
+          onChange={(first) => {}}
         />
       ))}
       <button
