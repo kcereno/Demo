@@ -62,3 +62,8 @@ export type DropdownDataType = {
   id: string;
   options: DropdownOptionsType;
 };
+
+export type ChartDataType = {
+  name: string;
+  data: { [key: string]: number };
+};

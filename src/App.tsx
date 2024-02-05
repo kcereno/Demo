@@ -12,6 +12,7 @@ import {
 } from './features/loanData/LoanDataSlice';
 
 import GradeTable from './components/GradeTable';
+import GradeChart from './components/GradeChart';
 
 function App() {
   const { data, filteredData, loading, error, filters } = useAppSelector(
@@ -57,16 +58,22 @@ function App() {
           Loading Data
         </p>
       ) : (
-        <div className="space-y-6">
-          <GradeTable loanData={filteredData} />
-          <GradeTableFilter
-            filters={filters}
-            updateFilters={(updatedFilters) => {
-              dispatch(setFilters(updatedFilters));
-            }}
-            loanData={data}
-          />
-        </div>
+        <>
+          <div className="space-y-6">
+            <GradeTable loanData={filteredData} />
+            <GradeTableFilter
+              filters={filters}
+              updateFilters={(updatedFilters) => {
+                dispatch(setFilters(updatedFilters));
+              }}
+              loanData={data}
+            />
+          </div>
+          <div className="">
+            <GradeChart chartData={filteredData} />
+          </div>
+        </>
+        // Chart
       )}
     </main>
   );

@@ -4,3 +4,6 @@ export const extractUniqueValues = (arr: any[], key: string) => {
 
 export const convertToDollarString = (number: number) =>
   number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+export const roundUpToNearest = (value: number, increment: number) =>
+  Math.ceil(value / increment) * increment;
