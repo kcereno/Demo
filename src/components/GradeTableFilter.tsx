@@ -1,33 +1,45 @@
 import React from 'react';
 import Dropdown from './ui/Dropdown';
+import {
+  FilterType,
+  HomeOwnershipEnum,
+  LoanDataType,
+  QuarterEnum,
+} from '../types';
+import { extractUniqueValues } from '../utils';
 
-function GradeTableFilter() {
+type GradeTableFilterProps = {
+  filterBy: (filter: FilterType) => void;
+  loanData: LoanDataType[];
+};
+
+function GradeTableFilter({ filterBy, loanData }: GradeTableFilterProps) {
   const dropdownData = [
     {
       header: 'Home Ownership',
-      options: ['RENT', 'MORTGAGE', 'OWN'],
+      options: extractUniqueValues(loanData, 'homeOwnership'),
+      onChange: (value: HomeOwnershipEnum) =>
+        filterBy({ homeOwnership: value }),
     },
     {
       header: 'Quarter',
-      options: ['1', '2', '3', '4'],
+      options: extractUniqueValues(loanData, 'quarter'),
+      onChange: (value: QuarterEnum) => filterBy({ quarter: value }),
     },
-    {
-      header: 'Year',
-      options: ['2012', '2013', '2014', '2015', '2016'],
-    },
-    {
-      header: 'Grade',
-      options: ['A', 'B', 'C', 'D', 'E', 'F'],
-    },
+    // {
+    //   header: 'Year',
+    //   options: extractUniqueValues(loanData, 'year'),
+    // },
   ];
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 justify-center">
       {dropdownData.map((data, index) => (
         <Dropdown
           key={index}
           header={data.header}
           options={data.options}
+          onChange={data.onChange}
         />
       ))}
       <button

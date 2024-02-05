@@ -17,20 +17,20 @@ function Table({ tableData }: TablePropsType) {
                 scope="col"
                 className="px-6 py-3"
               >
-                {column.header}
+                {column.name}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {tableData.data.map((row, index) => (
+          {tableData.rows.map((row, rowIndex) => (
             <tr
-              key={index}
+              key={rowIndex}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
             >
-              {tableData.columns.map((column, index) => (
+              {tableData.columns.map((column, colIndex) => (
                 <td
-                  key={index}
+                  key={colIndex}
                   className="px-6 py-4"
                 >
                   {row[column.accessor]}
