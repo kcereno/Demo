@@ -23,15 +23,15 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       dispatch(setLoading(true));
+      const apiUrl = 'http://localhost:3001/api/server';
       try {
-        // Fetch data and remove all undefined grades
-        const data: LoanDataType[] = (await getData()).filter(
-          (entry) => entry.grade !== undefined
-        );
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
         dispatch(setLoanData(data));
       } catch (error) {
-        dispatch(setError(error));
+        console.log(error);
+        // dispatch(setError(error));
       } finally {
         dispatch(setLoading(false));
       }
