@@ -50,7 +50,7 @@ function GradeChart({ chartData }: GradeChartProps) {
   return (
     <div className="">
       <BarChart
-        width={730}
+        width={900}
         height={400}
         data={parsedData}
         margin={{
