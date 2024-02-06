@@ -1,15 +1,8 @@
-import React, { useEffect } from 'react';
 import './App.css';
-import { LoanDataType } from './types';
-import { getData } from './request/api';
+
 import GradeTableFilter from './components/GradeTableFilter';
 import { useAppDispatch, useAppSelector } from './hooks';
-import {
-  setLoanData,
-  setLoading,
-  setError,
-  setFilters,
-} from './features/loanData/LoanDataSlice';
+import { setFilters } from './features/loanData/LoanDataSlice';
 
 import GradeTable from './components/GradeTable';
 import GradeChart from './components/GradeChart';
@@ -40,10 +33,8 @@ function App() {
         </p>
       ) : (
         <>
-          <div className="">
-            <GradeChart chartData={filteredData} />
-          </div>
           <div className="space-y-6">
+            <GradeChart chartData={filteredData} />
             <GradeTable loanData={filteredData} />
             <GradeTableFilter
               filters={filters}

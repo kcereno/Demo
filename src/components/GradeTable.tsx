@@ -43,11 +43,7 @@ function GradeTable({ loanData }: GradeTableProps) {
     columns,
     rows,
   };
-  return (
-    <div>
-      <Table tableData={tableData} />
-    </div>
-  );
+  return <Table tableData={tableData} />;
 }
 
 export default GradeTable;

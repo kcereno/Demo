@@ -18,9 +18,10 @@ interface CustomTooltipProps {
 
 type GradeChartProps = {
   chartData: LoanDataType[];
+  className?: string;
 };
 
-function GradeChart({ chartData }: GradeChartProps) {
+function GradeChart({ chartData, className = '' }: GradeChartProps) {
   const uniqueGrades = extractUniqueValues(chartData, 'grade');
 
   const parsedData = uniqueGrades.map((grade) => {
@@ -48,7 +49,7 @@ function GradeChart({ chartData }: GradeChartProps) {
   const maxYValueRounded = roundUpToNearest(maxYValue, increment);
   const ticks = calculateTicks(0, maxYValueRounded, increment);
   return (
-    <div className="">
+    <div className={className}>
       <BarChart
         width={900}
         height={400}
@@ -60,7 +61,10 @@ function GradeChart({ chartData }: GradeChartProps) {
           bottom: 5,
         }}
       >
-        <XAxis dataKey="grade" />
+        <XAxis
+          dataKey="grade"
+          tickMargin={10}
+        />
         <YAxis
           ticks={ticks}
           tickFormatter={(value) => convertToDollarString(value)}
