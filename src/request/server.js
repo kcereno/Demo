@@ -1,4 +1,4 @@
-const { getData } = require('../request/api');
+const { getData } = require('./api');
 const express = require('express');
 const cors = require('cors'); // Import the cors middleware
 
@@ -7,7 +7,6 @@ const port = 3001;
 
 app.use(cors());
 
-// Define your endpoint
 app.get('/api/server', async (req, res) => {
   try {
     const response = await getData();

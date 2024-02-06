@@ -60,7 +60,10 @@ function GradeChart({ chartData }: GradeChartProps) {
           bottom: 5,
         }}
       >
-        <XAxis dataKey="grade" />
+        <XAxis
+          dataKey="grade"
+          tickMargin={10}
+        />
         <YAxis
           ticks={ticks}
           tickFormatter={(value) => convertToDollarString(value)}
