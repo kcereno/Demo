@@ -40,8 +40,6 @@ function App() {
     fetchData();
   }, [dispatch]);
 
-  console.log('App ~ filteredData:', filteredData);
-
   return (
     <main className="flex flex-col items-center pt-20 bg-gray-900 min-h-screen text-white">
       <h1 className="text-3xl font-bold tracking-tight mb-10">
@@ -59,6 +57,9 @@ function App() {
         </p>
       ) : (
         <>
+          <div className="">
+            <GradeChart chartData={filteredData} />
+          </div>
           <div className="space-y-6">
             <GradeTable loanData={filteredData} />
             <GradeTableFilter
@@ -68,9 +69,6 @@ function App() {
               }}
               loanData={data}
             />
-          </div>
-          <div className="">
-            <GradeChart chartData={filteredData} />
           </div>
         </>
         // Chart

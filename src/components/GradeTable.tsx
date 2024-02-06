@@ -8,7 +8,6 @@ type GradeTableProps = {
 };
 
 function GradeTable({ loanData }: GradeTableProps) {
-  console.log('GradeTable ~ loanData:', loanData);
   const row: TableRowType = {};
   const rows: TableRowType[] = [row];
 

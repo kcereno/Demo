@@ -3,6 +3,7 @@ import React from 'react';
 import { LoanDataType } from '../types';
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts';
 import {
+  calculateTicks,
   convertToDollarString,
   extractUniqueValues,
   roundUpToNearest,
@@ -36,38 +37,31 @@ function GradeChart({ chartData }: GradeChartProps) {
     };
   });
 
-  const maxYValue = Math.max(...parsedData.map((entry) => entry.dollarValue));
+  const maxYValue =
+    parsedData.length > 1
+      ? Math.max(...parsedData.map((data) => data.dollarValue))
+      : 0;
 
-  let increment = 0;
+  // Set the increment based on the maxYValue
+  let increment = 500000; // default increment of 1,000,000
+  if (maxYValue <= 1000000) {
+    increment = 250000;
+  }
 
-  if (maxYValue > 1000000) {
-    increment = 500000;
-  } else if (maxYValue <= 1000000) {
+  if (maxYValue <= 500000) {
     increment = 100000;
   }
 
-  const roundedMaxYValue = roundUpToNearest(maxYValue, increment);
+  if (maxYValue <= 250000) {
+    increment = 50000;
+  }
 
-  const numTicks = Math.ceil(roundedMaxYValue / increment);
-  const ticks = Array.from(
-    { length: numTicks + 1 },
-    (_, index) => index * increment
-  );
+  if (maxYValue <= 100000) {
+    increment = 10000;
+  }
 
-  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="">
-          <p className="text-black bg-slate-400 p-2 rounded">
-            {convertToDollarString(payload[0].value)}
-          </p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
+  const maxYValueRounded = roundUpToNearest(maxYValue, increment);
+  const ticks = calculateTicks(0, maxYValueRounded, increment);
   return (
     <div className="">
       <BarChart
@@ -83,11 +77,11 @@ function GradeChart({ chartData }: GradeChartProps) {
       >
         <XAxis dataKey="grade" />
         <YAxis
-          width={80}
-          domain={[0, roundedMaxYValue]}
           ticks={ticks}
-          tickFormatter={(value) => '$' + value.toLocaleString()}
+          tickFormatter={(value) => convertToDollarString(value)}
+          width={100}
         />
+
         <Tooltip content={CustomTooltip} />
         <Bar
           dataKey="dollarValue"
@@ -98,4 +92,17 @@ function GradeChart({ chartData }: GradeChartProps) {
   );
 }
 
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="">
+        <p className="text-black bg-slate-400 p-2 rounded">
+          {convertToDollarString(payload[0].value)}
+        </p>
+      </div>
+    );
+  }
+
+  return null;
+};
 export default GradeChart;
