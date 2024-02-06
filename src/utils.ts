@@ -26,3 +26,23 @@ export const calculateTicks = (min: number, max: number, increment: number) => {
 
   return numbers;
 };
+
+export const calulcateIncrement = (maxYValue: number) => {
+  let increment;
+
+  if (maxYValue <= 20000) {
+    increment = 1000;
+  } else if (maxYValue <= 100000) {
+    increment = 10000;
+  } else if (maxYValue <= 250000) {
+    increment = 50000;
+  } else if (maxYValue <= 500000) {
+    increment = 100000;
+  } else if (maxYValue <= 1000000) {
+    increment = 250000;
+  } else {
+    increment = 500000; // Default increment for values above 1,000,000
+  }
+
+  return increment;
+};

@@ -4,6 +4,7 @@ import { LoanDataType } from '../types';
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts';
 import {
   calculateTicks,
+  calulcateIncrement,
   convertToDollarString,
   extractUniqueValues,
   roundUpToNearest,
@@ -43,23 +44,7 @@ function GradeChart({ chartData }: GradeChartProps) {
       : 0;
 
   // Set the increment based on the maxYValue
-  let increment = 500000; // default increment of 1,000,000
-  if (maxYValue <= 1000000) {
-    increment = 250000;
-  }
-
-  if (maxYValue <= 500000) {
-    increment = 100000;
-  }
-
-  if (maxYValue <= 250000) {
-    increment = 50000;
-  }
-
-  if (maxYValue <= 100000) {
-    increment = 10000;
-  }
-
+  const increment = calulcateIncrement(maxYValue);
   const maxYValueRounded = roundUpToNearest(maxYValue, increment);
   const ticks = calculateTicks(0, maxYValueRounded, increment);
   return (
