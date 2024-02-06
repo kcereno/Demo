@@ -1,8 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
 import { FilterType, LoanDataType } from '../../types';
 
-interface LoanDataState {
+export interface LoanDataState {
   data: LoanDataType[];
   filters: FilterType[];
   filteredData: LoanDataType[];

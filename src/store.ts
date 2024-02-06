@@ -1,12 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { loanDataSlice } from './features/loanData/LoanDataSlice';
 
-// export default configureStore({
-//   reducer: {
-//     counter: counterSlice,
-//   },
-// });
-
 export const store = configureStore({
   reducer: {
     loanData: loanDataSlice.reducer,

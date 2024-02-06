@@ -13,6 +13,7 @@ import {
 
 import GradeTable from './components/GradeTable';
 import GradeChart from './components/GradeChart';
+import useFetchData from './hooks/useFetchData';
 
 function App() {
   const { data, filteredData, loading, error, filters } = useAppSelector(
@@ -20,25 +21,7 @@ function App() {
   );
 
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch(setLoading(true));
-      try {
-        // Fetch data and remove all undefined grades
-        const data: LoanDataType[] = (await getData()).filter(
-          (entry) => entry.grade !== undefined
-        );
-
-        dispatch(setLoanData(data));
-      } catch (error) {
-        dispatch(setError(error));
-      } finally {
-        dispatch(setLoading(false));
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
+  useFetchData(dispatch);
 
   return (
     <main className="flex flex-col items-center pt-20 bg-gray-900 min-h-screen text-white">
